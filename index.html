@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="h-full overflow-hidden">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Artikel Ustası - A1 Almanca</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
@@ -12,100 +12,105 @@
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; transition: background-color 0.3s ease; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            transition: background-color 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+        }
+        
         .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
         }
+
         .correct-pop { animation: pop 0.4s ease-out forwards; }
         @keyframes pop {
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.08); }
             100% { transform: scale(1); }
         }
+
+        .safe-pb { padding-bottom: env(safe-area-inset-bottom); }
     </style>
 </head>
-<body class="bg-slate-100 dark:bg-slate-950 min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-100 dark:bg-slate-950 flex flex-col items-center p-4">
 
-    <!-- Top Left Controls -->
-    <div class="fixed top-6 left-6 flex gap-2">
-        <button onclick="toggleTheme()" class="p-3 bg-white dark:bg-slate-900 shadow-lg rounded-2xl text-slate-600 dark:text-slate-300 hover:scale-110 transition-all border border-slate-200 dark:border-slate-800">
-            <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
-            </svg>
-            <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-        </button>
-        <button id="sound-toggle" onclick="toggleSound()" class="p-3 bg-white dark:bg-slate-900 shadow-lg rounded-2xl text-slate-600 dark:text-slate-300 hover:scale-110 transition-all border border-slate-200 dark:border-slate-800">
-            <svg id="sound-on" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-            </svg>
-            <svg id="sound-off" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
-            </svg>
-        </button>
+    <!-- Header -->
+    <div class="w-full max-w-md flex justify-between items-center mb-4 pt-2">
+        <div class="flex gap-2">
+            <button onclick="toggleTheme()" class="p-4 bg-white dark:bg-slate-900 shadow-sm rounded-2xl text-slate-600 dark:text-slate-300 active:scale-90 transition-all border border-slate-200 dark:border-slate-800">
+                <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                </svg>
+                <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
+            <button id="sound-toggle" onclick="toggleSound()" class="p-4 bg-white dark:bg-slate-900 shadow-sm rounded-2xl text-slate-600 dark:text-slate-300 active:scale-90 transition-all border border-slate-200 dark:border-slate-800">
+                <svg id="sound-on" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                </svg>
+                <svg id="sound-off" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                </svg>
+            </button>
+        </div>
+        <span id="counter" class="text-xs font-black text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2 rounded-2xl border border-indigo-100 dark:border-indigo-900/50 uppercase">1 / 300</span>
     </div>
 
-    <div class="w-full max-w-md">
-        <!-- Dashboard / Score -->
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h1 class="text-2xl font-black text-slate-900 dark:text-white leading-none tracking-tight">ARTIKEL USTASI</h1>
-                <p class="text-xs font-bold text-slate-400 dark:text-slate-500 tracking-widest uppercase mt-1">A1 Temel 250 Kelime</p>
-            </div>
-            <div id="stats" class="text-right">
-                <span id="counter" class="text-sm font-black text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/50">1 / 250</span>
-            </div>
-        </div>
-
+    <!-- App Content -->
+    <div class="w-full max-w-md flex-grow flex flex-col gap-4">
+        
         <!-- Main Card -->
-        <div id="card" class="bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl shadow-slate-200/60 dark:shadow-none p-10 text-center transition-all duration-300 transform">
-            <div class="mb-10">
-                <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Almanca Kelime</span>
-                <h2 id="word" class="text-5xl font-extrabold text-slate-800 dark:text-slate-100 mt-2 mb-1 lowercase leading-tight">kelime</h2>
-                <p id="translation" class="text-slate-400 dark:text-slate-500 font-medium italic">anlamı</p>
+        <div id="card" class="flex-grow bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl shadow-slate-200 dark:shadow-none p-6 text-center flex flex-col justify-center transition-all duration-300 border border-slate-50 dark:border-slate-800">
+            <div class="mb-8 px-2">
+                <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Almanca</span>
+                <h2 id="word" class="text-5xl sm:text-6xl font-black text-slate-800 dark:text-slate-100 mt-2 mb-2 lowercase break-words leading-tight">kelime</h2>
+                <p id="translation" class="text-lg sm:text-xl text-slate-400 dark:text-slate-500 font-semibold italic">anlamı</p>
             </div>
 
-            <!-- Buttons -->
-            <div class="grid grid-cols-3 gap-4">
-                <button onclick="checkAnswer('der')" class="article-btn group relative overflow-hidden bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500 py-4 rounded-2xl transition-all">
-                    <span class="text-xl font-black text-slate-400 dark:text-slate-500 group-hover:text-blue-500 transition-colors">der</span>
+            <!-- Horizontal Action Buttons -->
+            <div class="grid grid-cols-3 gap-2">
+                <button onclick="checkAnswer('der')" class="article-btn bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-90">
+                    <span class="text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400">der</span>
                 </button>
-                <button onclick="checkAnswer('die')" class="article-btn group relative overflow-hidden bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-800 hover:border-pink-400 dark:hover:border-pink-500 py-4 rounded-2xl transition-all">
-                    <span class="text-xl font-black text-slate-400 dark:text-slate-500 group-hover:text-pink-500 transition-colors">die</span>
+                <button onclick="checkAnswer('die')" class="article-btn bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-90">
+                    <span class="text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400">die</span>
                 </button>
-                <button onclick="checkAnswer('das')" class="article-btn group relative overflow-hidden bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-800 hover:border-emerald-400 dark:hover:border-emerald-500 py-4 rounded-2xl transition-all">
-                    <span class="text-xl font-black text-slate-400 dark:text-slate-500 group-hover:text-emerald-500 transition-colors">das</span>
+                <button onclick="checkAnswer('das')" class="article-btn bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-90">
+                    <span class="text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400">das</span>
                 </button>
             </div>
         </div>
 
-        <!-- Puan Tabelası -->
-        <div class="mt-8 bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-800 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-2xl text-amber-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
+        <!-- Score & Navigation -->
+        <div class="flex flex-col gap-3 safe-pb">
+            <div class="bg-white dark:bg-slate-900 rounded-[2rem] p-4 shadow-md border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="p-3 bg-amber-100 dark:bg-amber-900/30 rounded-2xl text-amber-600 dark:text-amber-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase">PUAN</p>
+                        <p id="score" class="text-2xl font-black text-slate-800 dark:text-slate-100">0</p>
+                    </div>
                 </div>
-                <div>
-                    <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tight">Toplam Skor</p>
-                    <p id="score" class="text-2xl font-black text-slate-800 dark:text-slate-100">0</p>
-                </div>
+                <p id="score-feedback" class="text-sm font-black opacity-0 transition-all duration-300">BAŞARILAR!</p>
             </div>
-            <div class="text-right">
-                <p id="score-feedback" class="text-sm font-bold opacity-0 transition-all duration-300">İyi Gidiyorsun!</p>
-            </div>
-        </div>
 
-        <!-- Controls -->
-        <div class="flex gap-4 mt-4">
-            <button onclick="prevWord()" class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 font-bold py-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Geri</button>
-            <button onclick="nextWord()" class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 font-bold py-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Atla</button>
+            <div class="grid grid-cols-2 gap-3 pb-2">
+                <button onclick="prevWord()" class="bg-slate-200/50 dark:bg-slate-800/50 text-slate-500 font-bold py-4 rounded-[1.5rem] active:bg-slate-200 transition-colors text-xs uppercase tracking-tighter">Önceki</button>
+                <button onclick="nextWord()" class="bg-slate-200/50 dark:bg-slate-800/50 text-slate-500 font-bold py-4 rounded-[1.5rem] active:bg-slate-200 transition-colors text-xs uppercase tracking-tighter">Atla / Sonraki</button>
+            </div>
         </div>
     </div>
 
@@ -113,7 +118,7 @@
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         let soundEnabled = true;
         let totalScore = 0;
-        let isFirstAttempt = true; // Her kelime için ilk deneme takibi
+        let isFirstAttempt = true;
 
         function playSound(type) {
             if (!soundEnabled) return;
@@ -121,23 +126,18 @@
             const gain = audioCtx.createGain();
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-
             if (type === 'correct') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+                osc.type = 'sine'; osc.frequency.setValueAtTime(523, audioCtx.currentTime);
                 gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.2);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.15);
             } else {
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.3);
+                // Yanlış cevap için "Buzzer" sesi
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(110, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(70, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.2);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.2);
             }
         }
 
@@ -145,16 +145,10 @@
             totalScore += amount;
             const scoreEl = document.getElementById('score');
             const feedbackEl = document.getElementById('score-feedback');
-            
             scoreEl.innerText = totalScore;
-            
-            // Geribildirim efekti
-            feedbackEl.innerText = amount > 0 ? `+${amount} Harika!` : `${amount} Dikkat!`;
-            feedbackEl.className = `text-sm font-bold opacity-100 ${amount > 0 ? 'text-emerald-500' : 'text-rose-500'}`;
-            
-            setTimeout(() => {
-                feedbackEl.style.opacity = '0';
-            }, 1000);
+            feedbackEl.innerText = amount > 0 ? `+${amount} HARİKA!` : `${amount} TEKRAR DENE`;
+            feedbackEl.className = `text-sm font-black opacity-100 ${amount > 0 ? 'text-emerald-500' : 'text-rose-500'}`;
+            setTimeout(() => { feedbackEl.style.opacity = '0'; }, 1000);
         }
 
         function toggleSound() {
@@ -163,108 +157,124 @@
             document.getElementById('sound-off').classList.toggle('hidden', soundEnabled);
         }
 
-        function toggleTheme() {
-            document.documentElement.classList.toggle('dark');
-        }
+        function toggleTheme() { document.documentElement.classList.toggle('dark'); }
 
+        // A1 Seviyesi En Sık Kullanılan 300 Kelime
         const wordList = [
-            { w: "Vater", a: "der", t: "baba" }, { w: "Mutter", a: "die", t: "anne" }, { w: "Kind", a: "das", t: "çocuk" },
-            { w: "Sohn", a: "der", t: "oğul" }, { w: "Tochter", a: "die", t: "kız evlat" }, { w: "Bruder", a: "der", t: "erkek kardeş" },
-            { w: "Schwester", a: "die", t: "kız kardeş" }, { w: "Haus", a: "das", t: "ev" }, { w: "Tisch", a: "der", t: "masa" },
-            { w: "Stuhl", a: "der", t: "sandalye" }, { w: "Auto", a: "das", t: "araba" }, { w: "Stadt", a: "die", t: "şehir" },
-            { w: "Schule", a: "die", t: "okul" }, { w: "Buch", a: "das", t: "kitap" }, { w: "Lehrer", a: "der", t: "öğretmen" },
-            { w: "Wasser", a: "das", t: "su" }, { w: "Brot", a: "das", t: "ekmek" }, { w: "Kaffee", a: "der", t: "kahve" },
-            { w: "Milch", a: "die", t: "süt" }, { w: "Apfel", a: "der", t: "elma" }, { w: "Banane", a: "die", t: "muz" },
-            { w: "Hund", a: "der", t: "köpek" }, { w: "Katze", a: "die", t: "kedi" }, { w: "Fahrrad", a: "das", t: "bisiklet" },
-            { w: "Straße", a: "die", t: "cadde" }, { w: "Bahnhof", a: "der", t: "istasyon" }, { w: "Fenster", a: "das", t: "pencere" },
-            { w: "Tür", a: "die", t: "kapı" }, { w: "Küche", a: "die", t: "mutfak" }, { w: "Zimmer", a: "das", t: "oda" },
-            { w: "Garten", a: "der", t: "bahçe" }, { w: "Schlüssel", a: "der", t: "anahtar" }, { w: "Handy", a: "das", t: "cep telefonu" },
-            { w: "Tasche", a: "die", t: "çanta" }, { w: "Uhr", a: "die", t: "saat" }, { w: "Geld", a: "das", t: "para" },
-            { w: "Arbeit", a: "die", t: "iş" }, { w: "Beruf", a: "der", t: "meslek" }, { w: "Freund", a: "der", t: "arkadaş" },
-            { w: "Frage", a: "die", t: "soru" }, { w: "Antwort", a: "die", t: "cevap" }, { w: "Wort", a: "das", t: "kelime" },
-            { w: "Satz", a: "der", t: "cümle" }, { w: "Beispiel", a: "das", t: "örnek" }, { w: "Fehler", a: "der", t: "hata" },
-            { w: "Glück", a: "das", t: "şans" }, { w: "Sonne", a: "die", t: "güneş" }, { w: "Mond", a: "der", t: "ay" },
-            { w: "Tag", a: "der", t: "gün" }, { w: "Nacht", a: "die", t: "gece" }, { w: "Woche", a: "die", t: "hafta" },
-            { w: "Monat", a: "der", t: "ay (zaman)" }, { w: "Jahr", a: "das", t: "yıl" }, { w: "Frühling", a: "der", t: "ilkbahar" },
-            { w: "Sommer", a: "der", t: "yaz" }, { w: "Herbst", a: "der", t: "sonbahar" }, { w: "Winter", a: "der", t: "kış" },
-            { w: "Wetter", a: "das", t: "hava durumu" }, { w: "Regen", a: "der", t: "yağmur" }, { w: "Wind", a: "der", t: "rüzgar" },
-            { w: "Kopf", a: "der", t: "baş" }, { w: "Hand", a: "die", t: "el" }, { w: "Fuş", a: "der", t: "ayak" },
-            { w: "Auge", a: "das", t: "göz" }, { w: "Ohr", a: "das", t: "kulak" }, { w: "Mund", a: "der", t: "ağız" },
-            { w: "Nase", a: "die", t: "burun" }, { w: "Haar", a: "das", t: "saç" }, { w: "Körper", a: "der", t: "vücut" },
-            { w: "Herz", a: "das", t: "kalp" }, { w: "Krankheit", a: "die", t: "hastalık" }, { w: "Arzt", a: "der", t: "doktor" },
-            { w: "Medizin", a: "die", t: "tıp/ilaç" }, { w: "Krankenhaus", a: "das", t: "hastane" }, { w: "Bett", a: "das", t: "yatak" },
-            { w: "Schrank", a: "der", t: "dolap" }, { w: "Regal", a: "das", t: "raf" }, { w: "Lampe", a: "die", t: "lamba" },
-            { w: "Bild", a: "das", t: "resim" }, { w: "Teppich", a: "der", t: "halı" }, { w: "Kühlschrank", a: "der", t: "buzdolabı" },
-            { w: "Herd", a: "der", t: "ocak" }, { w: "Spülmaschine", a: "die", t: "bulaşık makinesi" }, { w: "Waschmaschine", a: "die", t: "çamaşır makinesi" },
-            { w: "Fernseher", a: "der", t: "televizyon" }, { w: "Radio", a: "das", t: "radyo" }, { w: "Computer", a: "der", t: "bilgisayar" },
-            { w: "Papier", a: "das", t: "kağıt" }, { w: "Bleistift", a: "der", t: "kurşun kalem" }, { w: "Kugelschreiber", a: "der", t: "tükenmez kalem" },
-            { w: "Heft", a: "das", t: "defter" }, { w: "Brille", a: "die", t: "gözlük" }, { w: "Zeitung", a: "die", t: "gazete" },
-            { w: "Brief", a: "der", t: "mektup" }, { w: "E-Mail", a: "die", t: "e-posta" }, { w: "Telefon", a: "das", t: "telefon" },
-            { w: "Restaurant", a: "das", t: "restoran" }, { w: "Café", a: "das", t: "kafe" }, { w: "Hotel", a: "das", t: "otel" },
-            { w: "Bäckerei", a: "die", t: "fırın" }, { w: "Supermarkt", a: "der", t: "süpermarket" }, { w: "Markt", a: "der", t: "pazar" },
-            { w: "Bank", a: "die", t: "banka" }, { w: "Post", a: "die", t: "postane" }, { w: "Polizei", a: "die", t: "polis" },
-            { w: "Flughafen", a: "der", t: "havalimanı" }, { w: "Flugzeug", a: "das", t: "uçak" }, { w: "Fahrkarte", a: "die", t: "bilet" },
-            { w: "Reise", a: "die", t: "yolculuk" }, { w: "Urlaub", a: "der", t: "tatil" }, { w: "Koffer", a: "der", t: "bavul" },
-            { w: "Wald", a: "der", t: "orman" }, { w: "Baum", a: "der", t: "ağaç" }, { w: "Blume", a: "die", t: "çiçek" },
-            { w: "Berg", a: "der", t: "dağ" }, { w: "Meer", a: "das", t: "deniz" }, { w: "See", a: "der", t: "göl" },
-            { w: "Fluss", a: "der", t: "nehir" }, { w: "Strand", a: "der", t: "plaj" }, { w: "Insel", a: "die", t: "ada" },
-            { w: "Feuer", a: "das", t: "ateş" }, { w: "Erde", a: "die", t: "dünya/toprak" }, { w: "Licht", a: "das", t: "ışık" },
-            { w: "Himmel", a: "der", t: "gökyüzü" }, { w: "Stern", a: "der", t: "yıldız" }, { w: "Kleidung", a: "die", t: "giysi" },
-            { w: "Hose", a: "die", t: "pantolon" }, { w: "Rock", a: "der", t: "etek" }, { w: "Kleid", a: "das", t: "elbise" },
-            { w: "Hemd", a: "das", t: "gömlek" }, { w: "T-Shirt", a: "das", t: "tişört" }, { w: "Pullover", a: "der", t: "kazak" },
-            { w: "Jacke", a: "die", t: "ceket" }, { w: "Mantel", a: "der", t: "palto" }, { w: "Schuh", a: "der", t: "ayakkabı" },
-            { w: "Socke", a: "die", t: "çorap" }, { w: "Hut", a: "der", t: "şapka" }, { w: "Gürtel", a: "der", t: "kemer" },
-            { w: "Handschuh", a: "der", t: "eldiven" }, { w: "Frühstück", a: "das", t: "kahvaltı" },
-            { w: "Mittagessen", a: "das", t: "öğle yemeği" }, { w: "Abendessen", a: "das", t: "akşam yemeği" }, { w: "Käse", a: "der", t: "peynir" },
-            { w: "Wurst", a: "die", t: "sucuk/sosis" }, { w: "Ei", a: "das", t: "yumurta" }, { w: "Salz", a: "das", t: "tuz" },
-            { w: "Zucker", a: "der", t: "şeker" }, { w: "Pfeffer", a: "der", t: "karabiber" }, { w: "Reis", a: "der", t: "pirinç" },
-            { w: "Nudel", a: "die", t: "makarna" }, { w: "Kartoffel", a: "die", t: "patates" }, { w: "Suppe", a: "die", t: "çorba" },
-            { w: "Fleisch", a: "das", t: "et" }, { w: "Fisch", a: "der", t: "balık" }, { w: "Hähnchen", a: "das", t: "tavuk" },
-            { w: "Gemüse", a: "das", t: "sebze" }, { w: "Obst", a: "das", t: "meyve" }, { w: "Salat", a: "der", t: "salata" },
-            { w: "Kuchen", a: "der", t: "kek" }, { w: "Tee", a: "der", t: "çay" }, { w: "Saft", a: "der", t: "meyve suyu" },
-            { w: "Bier", a: "das", t: "bira" }, { w: "Wein", a: "der", t: "şarap" }, { w: "Geschenk", a: "das", t: "hediye" },
-            { w: "Party", a: "die", t: "parti" }, { w: "Musik", a: "die", t: "müzik" }, { w: "Sport", a: "der", t: "spor" },
-            { w: "Kino", a: "das", t: "sinema" }, { w: "Theater", a: "das", t: "tiyatro" }, { w: "Museum", a: "das", t: "müze" },
-            { w: "Bücherei", a: "die", t: "kütüphane" }, { w: "Spiel", a: "das", t: "oyun" }, { w: "Messer", a: "das", t: "bıçak" },
-            { w: "Gabel", a: "die", t: "çatal" }, { w: "Löffel", a: "der", t: "kaşık" }, { w: "Teller", a: "der", t: "tabak" },
-            { w: "Glas", a: "das", t: "bardak" }, { w: "Tasse", a: "die", t: "fincan" }, { w: "Flasche", a: "die", t: "şişe" },
-            { w: "Pfanne", a: "die", t: "tava" }, { w: "Topf", a: "der", t: "tencere" }, { w: "Balkon", a: "der", t: "balkon" },
-            { w: "Aufzug", a: "der", t: "asansör" }, { w: "Nachbar", a: "der", t: "komşu" }, { w: "Person", a: "die", t: "kişi" },
-            { w: "Name", a: "der", t: "isim" }, { w: "Nummer", a: "die", t: "numara" }, { w: "Adresse", a: "die", t: "adres" },
-            { w: "Pass", a: "der", t: "pasaport" }, { w: "Geldbeutel", a: "der", t: "cüzdan" }, { w: "Tier", a: "das", t: "hayvan" },
-            { w: "Pferd", a: "das", t: "at" }, { w: "Schwein", a: "das", t: "domuz" }, { w: "Kuh", a: "die", t: "inek" },
-            { w: "Vogel", a: "der", t: "kuş" }, { w: "Himmel", a: "der", t: "gökyüzü" }, { w: "Welt", a: "die", t: "dünya" },
-            { w: "Sprache", a: "die", t: "dil" }, { w: "Land", a: "das", t: "ülke" }, { w: "Reise", a: "die", t: "gezi" },
-            { w: "Firma", a: "die", t: "firma" }, { w: "Chef", a: "der", t: "patron" }, { w: "Termin", a: "der", t: "randevu" },
-            { w: "Problem", a: "das", t: "sorun" }, { w: "Idee", a: "die", t: "fikir" }, { w: "Zeit", a: "die", t: "zaman" },
-            { w: "Leben", a: "das", t: "hayat" }, { w: "Hilfe", a: "die", t: "yardım" }, { w: "Weg", a: "der", t: "yol" },
-            { w: "Platz", a: "der", t: "meydan/yer" }, { w: "Park", a: "der", t: "park" }, { w: "Eingang", a: "der", t: "giriş" },
-            { w: "Ausgang", a: "der", t: "çıkış" }, { w: "Treppe", a: "die", t: "merdiven" }, { w: "Keller", a: "der", t: "bodrum" },
-            { w: "Dach", a: "das", t: "çatı" }, { w: "Wand", a: "die", t: "duvar" }, { w: "Boden", a: "der", t: "zemin" },
-            { w: "Decke", a: "die", t: "tavan/battaniye" }, { w: "Heizung", a: "die", t: "kalorifer" }, { w: "Spiegel", a: "der", t: "ayna" },
-            { w: "Seife", a: "die", t: "sabun" }, { w: "Handtuch", a: "das", t: "havlu" }, { w: "Bürste", a: "die", t: "fırça" },
-            { w: "Kamm", a: "der", t: "tarak" }, { w: "Zahnbürste", a: "die", t: "diş fırçası" }, { w: "Zahnpasta", a: "die", t: "diş macunu" }
+            {w:"Vater",a:"der",t:"baba"}, {w:"Mutter",a:"die",t:"anne"}, {w:"Kind",a:"das",t:"çocuk"},
+            {w:"Tisch",a:"der",t:"masa"}, {w:"Stuhl",a:"der",t:"sandalye"}, {w:"Haus",a:"das",t:"ev"},
+            {w:"Auto",a:"das",t:"araba"}, {w:"Stadt",a:"die",t:"şehir"}, {w:"Schule",a:"die",t:"okul"},
+            {w:"Lehrer",a:"der",t:"öğretmen"}, {w:"Brot",a:"das",t:"ekmek"}, {w:"Wasser",a:"das",t:"su"},
+            {w:"Apfel",a:"der",t:"elma"}, {w:"Banane",a:"die",t:"muz"}, {w:"Milch",a:"die",t:"süt"},
+            {w:"Kaffee",a:"der",t:"kahve"}, {w:"Hund",a:"der",t:"köpek"}, {w:"Katze",a:"die",t:"kedi"},
+            {w:"Sonne",a:"die",t:"güneş"}, {w:"Mond",a:"der",t:"ay"}, {w:"Tag",a:"der",t:"gün"},
+            {w:"Nacht",a:"die",t:"gece"}, {w:"Uhr",a:"die",t:"saat"}, {w:"Buch",a:"das",t:"kitap"},
+            {w:"Fenster",a:"das",t:"pencere"}, {w:"Tür",a:"die",t:"kapı"}, {w:"Zimmer",a:"das",t:"oda"},
+            {w:"Küche",a:"die",t:"mutfak"}, {w:"Garten",a:"der",t:"bahçe"}, {w:"Schlüssel",a:"der",t:"anahtar"},
+            {w:"Arbeit",a:"die",t:"iş"}, {w:"Beruf",a:"der",t:"meslek"}, {w:"Freund",a:"der",t:"arkadaş"},
+            {w:"Bus",a:"der",t:"otobüs"}, {w:"Zug",a:"der",t:"tren"}, {w:"Flugzeug",a:"das",t:"uçak"},
+            {w:"Woche",a:"die",t:"hafta"}, {w:"Monat",a:"der",t:"ay"}, {w:"Jahr",a:"das",t:"yıl"},
+            {w:"Frühling",a:"der",t:"ilkbahar"}, {w:"Sommer",a:"der",t:"yaz"}, {w:"Herbst",a:"der",t:"sonbahar"},
+            {w:"Winter",a:"der",t:"kış"}, {w:"Wetter",a:"das",t:"hava"}, {w:"Regen",a:"der",t:"yağmur"},
+            {w:"Schnee",a:"der",t:"kar"}, {w:"Wind",a:"der",t:"rüzgar"}, {w:"Wald",a:"der",t:"orman"},
+            {w:"Berg",a:"der",t:"dağ"}, {w:"Meer",a:"das",t:"deniz"}, {w:"See",a:"der",t:"göl"},
+            {w:"Fluss",a:"der",t:"nehir"}, {w:"Blume",a:"die",t:"çiçek"}, {w:"Baum",a:"der",t:"ağaç"},
+            {w:"Vogel",a:"der",t:"kuş"}, {w:"Fisch",a:"der",t:"balık"}, {w:"Fleisch",a:"das",t:"et"},
+            {w:"Gemüse",a:"das",t:"sebze"}, {w:"Obst",a:"das",t:"meyve"}, {w:"Käse",a:"der",t:"peynir"},
+            {w:"Ei",a:"das",t:"yumurta"}, {w:"Saft",a:"der",t:"meyve suyu"}, {w:"Tee",a:"der",t:"çay"},
+            {w:"Bier",a:"das",t:"bira"}, {w:"Wein",a:"der",t:"şarap"}, {w:"Zucker",a:"der",t:"şeker"},
+            {w:"Salz",a:"das",t:"tuz"}, {w:"Löffel",a:"der",t:"kaşık"}, {w:"Gabel",a:"die",t:"çatal"},
+            {w:"Messer",a:"das",t:"bıçak"}, {w:"Teller",a:"der",t:"tabak"}, {w:"Tasse",a:"die",t:"fincan"},
+            {w:"Glas",a:"das",t:"bardak"}, {w:"Kopf",a:"der",t:"kafa"}, {w:"Hand",a:"die",t:"el"},
+            {w:"Fuß",a:"der",t:"ayak"}, {w:"Bein",a:"das",t:"bacak"}, {w:"Arm",a:"der",t:"kol"},
+            {w:"Auge",a:"das",t:"göz"}, {w:"Ohr",a:"das",t:"kulak"}, {w:"Mund",a:"der",t:"ağız"},
+            {w:"Nase",a:"die",t:"burun"}, {w:"Haar",a:"das",t:"saç"}, {w:"Herz",a:"das",t:"kalp"},
+            {w:"Bauch",a:"der",t:"karın"}, {w:"Rücken",a:"der",t:"sırt"}, {w:"Finger",a:"der",t:"parmak"},
+            {w:"Zahn",a:"der",t:"diş"}, {w:"Hals",a:"der",t:"boyun"}, {w:"Körper",a:"der",t:"vücut"},
+            {w:"Gesundheit",a:"die",t:"sağlık"}, {w:"Krankheit",a:"die",t:"hastalık"}, {w:"Arzt",a:"der",t:"doktor"},
+            {w:"Krankenhaus",a:"das",t:"hastane"}, {w:"Apotheke",a:"die",t:"eczane"}, {w:"Medizin",a:"die",t:"tıp/ilaç"},
+            {w:"Schmerz",a:"der",t:"ağrı"}, {w:"Fieber",a:"das",t:"ateş"}, {w:"Hilfe",a:"die",t:"yardım"},
+            {w:"Polizei",a:"die",t:"polis"}, {w:"Feuerwehr",a:"die",t:"itfaiye"}, {w:"Geld",a:"das",t:"para"},
+            {w:"Bank",a:"die",t:"banka"}, {w:"Preis",a:"der",t:"fiyat"}, {w:"Rechnung",a:"die",t:"fatura"},
+            {w:"Kasse",a:"die",t:"kasa"}, {w:"Markt",a:"der",t:"pazar"}, {w:"Supermarkt",a:"der",t:"süpermarket"},
+            {w:"Laden",a:"der",t:"dükkan"}, {w:"Kleidung",a:"die",t:"giysi"}, {w:"Hose",a:"die",t:"pantolon"},
+            {w:"Hemd",a:"das",t:"gömlek"}, {w:"Jacke",a:"die",t:"ceket"}, {w:"Mantel",a:"der",t:"palto"},
+            {w:"Schuh",a:"der",t:"ayakkabı"}, {w:"Kleid",a:"das",t:"elbise"}, {w:"Rock",a:"der",t:"etek"},
+            {w:"Hut",a:"der",t:"şapka"}, {w:"Brille",a:"die",t:"gözlük"}, {w:"Tasche",a:"die",t:"çanta"},
+            {w:"Koffer",a:"der",t:"valiz"}, {w:"Farbe",a:"die",t:"renk"}, {w:"Licht",a:"das",t:"ışık"},
+            {w:"Dunkelheit",a:"die",t:"karanlık"}, {w:"Zeit",a:"die",t:"zaman"}, {w:"Stunde",a:"die",t:"saat(süre)"},
+            {w:"Minute",a:"die",t:"dakika"}, {w:"Sekunde",a:"die",t:"saniye"}, {w:"Morgen",a:"der",t:"sabah"},
+            {w:"Mittag",a:"der",t:"öğle"}, {w:"Abend",a:"der",t:"akşam"}, {w:"Mitternacht",a:"die",t:"gece yarısı"},
+            {w:"Montag",a:"der",t:"pazartesi"}, {w:"Dienstag",a:"der",t:"salı"}, {w:"Mittwoch",a:"der",t:"çarşamba"},
+            {w:"Donnerstag",a:"der",t:"perşembe"}, {w:"Freitag",a:"der",t:"cuma"}, {w:"Samstag",a:"der",t:"cumartesi"},
+            {w:"Sonntag",a:"der",t:"pazar"}, {w:"Urlaub",a:"der",t:"tatil"}, {w:"Ferien",a:"die",t:"okul tatili"},
+            {w:"Reise",a:"die",t:"seyahat"}, {w:"Fahrkarte",a:"die",t:"bilet"}, {w:"Pass",a:"der",t:"pasaport"},
+            {w:"Hotel",a:"das",t:"otel"}, {w:"Zelt",a:"das",t:"çadır"}, {w:"Wald",a:"der",t:"orman"},
+            {w:"Luft",a:"die",t:"hava(nefes)"}, {w:"Erde",a:"die",t:"dünya/toprak"}, {w:"Feuer",a:"das",t:"ateş"},
+            {w:"Eis",a:"das",t:"buz/dondurma"}, {w:"Sterne",a:"die",t:"yıldızlar"}, {w:"Himmel",a:"der",t:"gökyüzü"},
+            {w:"Wolke",a:"die",t:"bulut"}, {w:"Frage",a:"die",t:"soru"}, {w:"Antwort",a:"die",t:"cevap"},
+            {w:"Wort",a:"das",t:"kelime"}, {w:"Satz",a:"der",t:"cümle"}, {w:"Text",a:"der",t:"metin"},
+            {w:"Seite",a:"die",t:"sayfa"}, {w:"Brief",a:"der",t:"mektup"}, {w:"E-Mail",a:"die",t:"e-posta"},
+            {w:"Telefon",a:"das",t:"telefon"}, {w:"Computer",a:"der",t:"bilgisayar"}, {w:"Internet",a:"das",t:"internet"},
+            {w:"Zeitung",a:"die",t:"gazete"}, {w:"Nachricht",a:"die",t:"haber"}, {w:"Musik",a:"die",t:"müzik"},
+            {w:"Lied",a:"das",t:"şarkı"}, {w:"Film",a:"der",t:"film"}, {w:"Kino",a:"das",t:"sinema"},
+            {w:"Theater",a:"das",t:"tiyatro"}, {w:"Museum",a:"das",t:"müze"}, {w:"Konzert",a:"das",t:"konser"},
+            {w:"Sport",a:"der",t:"spor"}, {w:"Fußball",a:"der",t:"futbol"}, {w:"Ball",a:"der",t:"top"},
+            {w:"Spiel",a:"das",t:"oyun"}, {w:"Hobby",a:"das",t:"hobi"}, {w:"Spaß",a:"der",t:"eğlence"},
+            {w:"Freude",a:"die",t:"neşe"}, {w:"Angst",a:"die",t:"korku"}, {w:"Trauer",a:"die",t:"keder"},
+            {w:"Wut",a:"die",t:"öfke"}, {w:"Liebe",a:"die",t:"aşk/sevgi"}, {w:"Hoffnung",a:"die",t:"umut"},
+            {w:"Glaube",a:"der",t:"inanç"}, {w:"Wahrheit",a:"die",t:"gerçek"}, {w:"Lüge",a:"die",t:"yalan"},
+            {w:"Geheimnis",a:"das",t:"sır"}, {w:"Problem",a:"das",t:"problem"}, {w:"Lösung",a:"die",t:"çözüm"},
+            {w:"Sache",a:"die",t:"şey/eşya"}, {w:"Gegenstand",a:"der",t:"nesne"}, {w:"Teil",a:"der/das",t:"parça"},
+            {w:"Stück",a:"das",t:"tane/adet"}, {w:"Zahl",a:"die",t:"sayı"}, {w:"Nummer",a:"die",t:"numara"},
+            {w:"Liste",a:"die",t:"liste"}, {w:"Ende",a:"das",t:"son"}, {w:"Anfang",a:"der",t:"başlangıç"},
+            {w:"Mitte",a:"die",t:"orta"}, {w:"Platz",a:"der",t:"yer/meydan"}, {w:"Ort",a:"der",t:"mekan"},
+            {w:"Weg",a:"der",t:"yol"}, {w:"Richtung",a:"die",t:"yön"}, {w:"Eingang",a:"der",t:"giriş"},
+            {w:"Ausgang",a:"der",t:"çıkış"}, {w:"Treppe",a:"die",t:"merdiven"}, {w:"Aufzug",a:"der",t:"asansör"},
+            {w:"Dach",a:"das",t:"çatı"}, {w:"Wand",a:"die",t:"duvar"}, {w:"Boden",a:"der",t:"zemin"},
+            {w:"Decke",a:"die",t:"tavan/battaniye"}, {w:"Spiegel",a:"der",t:"ayna"}, {w:"Seife",a:"die",t:"sabun"},
+            {w:"Handtuch",a:"das",t:"havlu"}, {w:"Bürste",a:"die",t:"fırça"}, {w:"Kamm",a:"der",t:"tarak"},
+            {w:"Taschentuch",a:"das",t:"mendil"}, {w:"Müll",a:"der",t:"çöp"}, {w:"Besen",a:"der",t:"süpürge"},
+            {w:"Küche",a:"die",t:"mutfak"}, {w:"Herd",a:"der",t:"ocak"}, {w:"Ofen",a:"der",t:"fırın"},
+            {w:"Kühlschrank",a:"der",t:"buzdolabı"}, {w:"Topf",a:"der",t:"tencere"}, {w:"Pfanne",a:"die",t:"tava"},
+            {w:"Spülmaschine",a:"die",t:"bulaşık makinesi"}, {w:"Waschmaschine",a:"die",t:"çamaşır makinesi"},
+            {w:"Bügeleisen",a:"das",t:"ütü"}, {w:"Staubsauger",a:"der",t:"elektrikli süpürge"},
+            {w:"Nachbar",a:"der",t:"komşu"}, {w:"Gast",a:"der",t:"misafir"}, {w:"Leute",a:"die",t:"insanlar"},
+            {w:"Mensch",a:"der",t:"insan"}, {w:"Mann",a:"der",t:"adam"}, {w:"Frau",a:"die",t:"kadın"},
+            {w:"Junge",a:"der",t:"oğlan"}, {w:"Mädchen",a:"das",t:"kız çocuk"}, {w:"Baby",a:"das",t:"bebek"},
+            {w:"Erwachsene",a:"der/die",t:"yetişkin"}, {w:"Jugendliche",a:"der/die",t:"genç"},
+            {w:"Rentner",a:"der",t:"emekli"}, {w:"Ausländer",a:"der",t:"yabancı"}, {w:"Tourist",a:"der",t:"turist"},
+            {w:"Bürger",a:"der",t:"vatandaş"}, {w:"Name",a:"der",t:"isim"}, {w:"Vorname",a:"der",t:"ad"},
+            {w:"Nachname",a:"der",t:"soyadı"}, {w:"Adresse",a:"die",t:"adres"}, {w:"Geburtstag",a:"der",t:"doğum günü"},
+            {w:"Alter",a:"das",t:"yaş"}, {w:"Heimat",a:"die",t:"vatan"}, {w:"Land",a:"das",t:"ülke"},
+            {w:"Sprache",a:"die",t:"dil"}, {w:"Wörterbuch",a:"das",t:"sözlük"}, {w:"Kurs",a:"der",t:"kurs"},
+            {w:"Klasse",a:"die",t:"sınıf"}, {w:"Prüfung",a:"die",t:"sınav"}, {w:"Note",a:"die",t:"not"},
+            {w:"Zeugnis",a:"das",t:"karne/sertifika"}, {w:"Erfolg",a:"der",t:"başarı"}, {w:"Geschenk",a:"das",t:"hediye"},
+            {w:"Feier",a:"die",t:"kutlama"}, {w:"Party",a:"die",t:"parti"}, {w:"Besuch",a:"der",t:"ziyaret"},
+            {w:"Einladung",a:"die",t:"davet"}, {w:"Hochzeit",a:"die",t:"düğün"}, {w:"Beziehung",a:"die",t:"ilişki"},
+            {w:"Ehe",a:"die",t:"evlilik"}, {w:"Partner",a:"der",t:"partner"}, {w:"Kollege",a:"der",t:"meslektaş"},
+            {w:"Chef",a:"der",t:"patron"}, {w:"Firma",a:"die",t:"şirket"}, {w:"Fabrik",a:"die",t:"fabrika"},
+            {w:"Büro",a:"das",t:"ofis"}, {w:"Werkstatt",a:"die",t:"atölye"}, {w:"Baustelle",a:"die",t:"şantiye"},
+            {w:"Uniform",a:"die",t:"üniforma"}, {w:"Werkzeug",a:"das",t:"alet"}, {w:"Maschine",a:"die",t:"makine"},
+            {w:"Strom",a:"der",t:"elektrik"}, {w:"Energie",a:"die",t:"enerji"}, {w:"Umwelt",a:"die",t:"çevre"},
+            {w:"Natur",a:"die",t:"doğa"}, {w:"Müll",a:"der",t:"çöp"}, {w:"Plastik",a:"das",t:"plastik"},
+            {w:"Papier",a:"das",t:"kağıt"}, {w:"Holz",a:"das",t:"odun"}, {w:"Metall",a:"das",t:"metal"},
+            {w:"Stein",a:"der",t:"taş"}, {w:"Sand",a:"der",t:"kum"}, {w:"Glas",a:"das",t:"cam"}
         ];
 
         let currentIndex = 0;
         let isLocked = false;
 
-        const card = document.getElementById('card');
-        const wordEl = document.getElementById('word');
-        const transEl = document.getElementById('translation');
-        const counterEl = document.getElementById('counter');
-
         function loadWord() {
             const current = wordList[currentIndex];
-            wordEl.innerText = current.w;
-            transEl.innerText = `(${current.t})`;
-            counterEl.innerText = `${currentIndex + 1} / ${wordList.length}`;
-            
-            isFirstAttempt = true; // Yeni kelime için deneme hakkını sıfırla
-            
-            // Reset button styles
-            document.querySelectorAll('.article-btn span').forEach(s => s.className = 'text-xl font-black text-slate-400 dark:text-slate-500 group-hover:text-current transition-colors');
-            document.querySelectorAll('.article-btn').forEach(b => b.className = b.className.replace(/bg-\w+-500|border-\w+-600|text-white/g, '').trim() + " bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-800");
+            document.getElementById('word').innerText = current.w;
+            document.getElementById('translation').innerText = `(${current.t})`;
+            document.getElementById('counter').innerText = `${currentIndex + 1} / ${wordList.length}`;
+            isFirstAttempt = true;
+            document.querySelectorAll('.article-btn span').forEach(s => s.className = 'text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400');
+            document.querySelectorAll('.article-btn').forEach(b => {
+                b.className = "article-btn bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-90";
+            });
         }
 
         function checkAnswer(choice) {
@@ -276,59 +286,40 @@
             if (choice === correct) {
                 isLocked = true;
                 playSound('correct');
+                if (isFirstAttempt) updateScore(10);
                 
-                // Sadece ilk denemede doğru bildiyse puan ver
-                if (isFirstAttempt) {
-                    updateScore(10);
-                }
-
                 const color = choice === 'der' ? 'blue' : choice === 'die' ? 'pink' : 'emerald';
-                btn.classList.add(`bg-${color}-500`, `border-${color}-600`, 'correct-pop');
-                span.classList.remove('text-slate-400', 'dark:text-slate-500');
+                btn.classList.add(`bg-${color}-500`, 'text-white', 'border-transparent', 'correct-pop');
                 span.classList.add('text-white');
 
                 setTimeout(() => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(10px)';
+                    document.getElementById('card').style.opacity = '0';
                     setTimeout(() => {
                         nextWord();
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
+                        document.getElementById('card').style.opacity = '1';
                         isLocked = false;
-                        btn.classList.remove('correct-pop');
                     }, 300);
                 }, 800);
             } else {
-                playSound('wrong');
-                
-                // İlk denemede yanlış yaptıysa puan düş ve o kelime için puan hakkını kapat
+                playSound('wrong'); // Yeni hata sesi burada çalıyor
                 if (isFirstAttempt) {
                     updateScore(-5);
                     isFirstAttempt = false; 
                 }
-
-                card.classList.add('shake');
-                btn.classList.add('bg-rose-500', 'border-rose-600');
+                document.getElementById('card').classList.add('shake');
+                btn.classList.add('bg-rose-500', 'border-transparent');
                 span.classList.add('text-white');
                 setTimeout(() => {
-                    card.classList.remove('shake');
-                    btn.classList.remove('bg-rose-500', 'border-rose-600');
+                    document.getElementById('card').classList.remove('shake');
+                    btn.classList.remove('bg-rose-500', 'border-transparent');
                     span.classList.remove('text-white');
                 }, 500);
             }
         }
 
-        function nextWord() {
-            currentIndex = (currentIndex + 1) % wordList.length;
-            loadWord();
-        }
+        function nextWord() { currentIndex = (currentIndex + 1) % wordList.length; loadWord(); }
+        function prevWord() { currentIndex = (currentIndex - 1 + wordList.length) % wordList.length; loadWord(); }
 
-        function prevWord() {
-            currentIndex = (currentIndex - 1 + wordList.length) % wordList.length;
-            loadWord();
-        }
-
-        // Initialize
         wordList.sort(() => Math.random() - 0.5);
         loadWord();
     </script>
