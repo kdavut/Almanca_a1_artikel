@@ -37,6 +37,12 @@
         }
 
         .safe-pb { padding-bottom: env(safe-area-inset-bottom); }
+
+        /* Koyu tema zorlamalı renk sınıfları */
+        .btn-correct-der { background-color: #3b82f6 !important; color: white !important; border-color: transparent !important; }
+        .btn-correct-die { background-color: #ec4899 !important; color: white !important; border-color: transparent !important; }
+        .btn-correct-das { background-color: #10b981 !important; color: white !important; border-color: transparent !important; }
+        .btn-wrong { background-color: #ef4444 !important; color: white !important; border-color: transparent !important; }
     </style>
 </head>
 <body class="bg-slate-100 dark:bg-slate-950 flex flex-col items-center p-4">
@@ -78,14 +84,14 @@
 
             <!-- Horizontal Action Buttons -->
             <div class="grid grid-cols-3 gap-2">
-                <button onclick="checkAnswer('der')" class="article-btn bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-90">
-                    <span class="text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400">der</span>
+                <button onclick="checkAnswer('der')" class="article-btn group bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-95">
+                    <span class="text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400 group-active:text-slate-800 dark:group-active:text-slate-200">der</span>
                 </button>
-                <button onclick="checkAnswer('die')" class="article-btn bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-90">
-                    <span class="text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400">die</span>
+                <button onclick="checkAnswer('die')" class="article-btn group bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-95">
+                    <span class="text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400 group-active:text-slate-800 dark:group-active:text-slate-200">die</span>
                 </button>
-                <button onclick="checkAnswer('das')" class="article-btn bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-90">
-                    <span class="text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400">das</span>
+                <button onclick="checkAnswer('das')" class="article-btn group bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-95">
+                    <span class="text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400 group-active:text-slate-800 dark:group-active:text-slate-200">das</span>
                 </button>
             </div>
         </div>
@@ -108,8 +114,8 @@
             </div>
 
             <div class="grid grid-cols-2 gap-3 pb-2">
-                <button onclick="prevWord()" class="bg-slate-200/50 dark:bg-slate-800/50 text-slate-500 font-bold py-4 rounded-[1.5rem] active:bg-slate-200 transition-colors text-xs uppercase tracking-tighter">Önceki</button>
-                <button onclick="nextWord()" class="bg-slate-200/50 dark:bg-slate-800/50 text-slate-500 font-bold py-4 rounded-[1.5rem] active:bg-slate-200 transition-colors text-xs uppercase tracking-tighter">Atla / Sonraki</button>
+                <button onclick="prevWord()" class="bg-slate-200/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 font-bold py-4 rounded-[1.5rem] active:bg-slate-300 dark:active:bg-slate-700 transition-colors text-xs uppercase tracking-tighter">Önceki</button>
+                <button onclick="nextWord()" class="bg-slate-200/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 font-bold py-4 rounded-[1.5rem] active:bg-slate-300 dark:active:bg-slate-700 transition-colors text-xs uppercase tracking-tighter">Atla / Sonraki</button>
             </div>
         </div>
     </div>
@@ -131,7 +137,6 @@
                 gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.15);
             } else {
-                // Yanlış cevap için "Buzzer" sesi
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(110, audioCtx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(70, audioCtx.currentTime + 0.2);
@@ -159,7 +164,6 @@
 
         function toggleTheme() { document.documentElement.classList.toggle('dark'); }
 
-        // A1 Seviyesi En Sık Kullanılan 300 Kelime
         const wordList = [
             {w:"Vater",a:"der",t:"baba"}, {w:"Mutter",a:"die",t:"anne"}, {w:"Kind",a:"das",t:"çocuk"},
             {w:"Tisch",a:"der",t:"masa"}, {w:"Stuhl",a:"der",t:"sandalye"}, {w:"Haus",a:"das",t:"ev"},
@@ -271,9 +275,8 @@
             document.getElementById('translation').innerText = `(${current.t})`;
             document.getElementById('counter').innerText = `${currentIndex + 1} / ${wordList.length}`;
             isFirstAttempt = true;
-            document.querySelectorAll('.article-btn span').forEach(s => s.className = 'text-xl sm:text-2xl font-black text-slate-600 dark:text-slate-400');
             document.querySelectorAll('.article-btn').forEach(b => {
-                b.className = "article-btn bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 py-6 sm:py-8 rounded-3xl transition-all active:scale-90";
+                b.classList.remove('btn-correct-der', 'btn-correct-die', 'btn-correct-das', 'btn-wrong');
             });
         }
 
@@ -281,16 +284,13 @@
             if (isLocked) return;
             const correct = wordList[currentIndex].a;
             const btn = event.currentTarget;
-            const span = btn.querySelector('span');
 
             if (choice === correct) {
                 isLocked = true;
                 playSound('correct');
                 if (isFirstAttempt) updateScore(10);
                 
-                const color = choice === 'der' ? 'blue' : choice === 'die' ? 'pink' : 'emerald';
-                btn.classList.add(`bg-${color}-500`, 'text-white', 'border-transparent', 'correct-pop');
-                span.classList.add('text-white');
+                btn.classList.add(`btn-correct-${choice}`, 'correct-pop');
 
                 setTimeout(() => {
                     document.getElementById('card').style.opacity = '0';
@@ -301,18 +301,16 @@
                     }, 300);
                 }, 800);
             } else {
-                playSound('wrong'); // Yeni hata sesi burada çalıyor
+                playSound('wrong');
                 if (isFirstAttempt) {
                     updateScore(-5);
                     isFirstAttempt = false; 
                 }
                 document.getElementById('card').classList.add('shake');
-                btn.classList.add('bg-rose-500', 'border-transparent');
-                span.classList.add('text-white');
+                btn.classList.add('btn-wrong');
                 setTimeout(() => {
                     document.getElementById('card').classList.remove('shake');
-                    btn.classList.remove('bg-rose-500', 'border-transparent');
-                    span.classList.remove('text-white');
+                    btn.classList.remove('btn-wrong');
                 }, 500);
             }
         }
